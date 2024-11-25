@@ -1,0 +1,1 @@
+Card pedidos fazer se é entrega somar junto com os valorese mudar a cor da etiqueta
