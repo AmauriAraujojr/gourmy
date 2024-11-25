@@ -1,12 +1,13 @@
 import { useContext, useEffect } from "react";
 import { CardPedidos } from "../cardPedidos";
 import { StyledPedidosControls } from "./styles";
-import { IPedidos, LoginContext } from "../../providers/login.context";
+import { IPedidos } from "../../providers/login.context";
 import { HeadingTwo700 } from "../../styles/tiphograpy";
+import { PedidosContext } from "../../providers/pedidos.context";
+import { PedidosModal } from "../cardPedidos/ModalPedidos";
 
 export const PedidosControls = () => {
-  const { company } = useContext(LoginContext);
-
+  const {pedidos,openPedido} = useContext(PedidosContext)
   const getDates = (timestamp: string) => {
     const data = new Date(timestamp);
 
@@ -28,7 +29,7 @@ export const PedidosControls = () => {
   };
 
   // Filtrar os pedidos do dia
-  const pedidosOnDay = company?.pedidos
+  const pedidosOnDay = pedidos
     .filter((pedidos: IPedidos) => {
       let today = new Date();
       let formatToday = `${String(today.getDate()).padStart(2, "0")}-${String(
@@ -55,7 +56,7 @@ export const PedidosControls = () => {
     (pedidos: IPedidos) => pedidos.status === "Concluído"
   );
 
-  useEffect(() => {}, [company]);
+  useEffect(() => {}, [pedidos]);
 
   return (
     <StyledPedidosControls>
@@ -106,6 +107,7 @@ export const PedidosControls = () => {
           );
         })}
       </ul>
+      {openPedido? <PedidosModal/>:null}
     </StyledPedidosControls>
   );
 };

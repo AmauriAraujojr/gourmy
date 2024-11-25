@@ -9,13 +9,21 @@ export const StyledCardPedidos= styled.li`
     background-color:var( --color-grey-8);
     border: 1px solid var( --color-grey-8);
     border-radius:5px;
+    &:hover{
+        border: 1px solid var(--color-brand2);
+        box-shadow:1px 1px var(--color-brand2)
+    }
 .box_type{
     display:flex;
     align-items: center;
     justify-content: space-between;
     width:100%;
-    .type_pedido{
+    .Entrega{
         background: var(--color-brand2);
+        padding:5px;
+    }
+    .Retirada{
+        background: var(--color-brand1);
         padding:5px;
     }
 }

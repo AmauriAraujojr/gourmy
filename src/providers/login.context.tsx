@@ -24,11 +24,9 @@ interface ICompany {
   cnpj: string;
   phoneNumber: string;
   email: string;
-  employees: IEmployee[];
   logo: string;
   img:string;
-  pedidos: [];
-  products: IPedidos[];
+ 
 }
 
 interface IEmployee {
@@ -51,6 +49,7 @@ export interface IPedidos {
   taxa:string | null;
   index:string | null;
   client: Iclients;
+  company:ICompany
 }
 
 export interface Iclients {

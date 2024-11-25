@@ -7,6 +7,7 @@ export const StyledHeader = styled.header`
   height: 80px;
   border-bottom: 2px solid var(--color-brand2);
   background:linear-gradient(var(--color-brand1), var(--color-brand4) );
+  
   .userData {
       display: flex;
       align-items:center;

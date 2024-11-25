@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StyledFormLogin } from "./styles";
 import { Input } from "../../../fragments/inputs";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { LoginContext } from "../../../providers/login.context";
 import logo from "../../../assets/Captura_de_tela_de_2024-11-13_14-38-55-removebg-preview.png";
 import { Button800, HeadingOne700 } from "../../../styles/tiphograpy";

@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 export const StyledPedidosControls=styled.section`
  display: flex;
-  width: 85%;
+  width: 100%;
   height: 91.5vh;
-  /* align-self: flex-end; */
   justify-content:space-between;
   padding:30px;
   gap: 30px;
