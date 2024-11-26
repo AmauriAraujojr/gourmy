@@ -40,8 +40,8 @@ interface IEmployee {
 
 export interface IPedidos {
   id: number;
-  products: [string];
-  pizzaOption: [];
+  products: [IProducts];
+  pizzaOption: [IpizzaOption];
   type: string;
   status: string;
   createdAt: Date;
@@ -50,6 +50,25 @@ export interface IPedidos {
   index:string | null;
   client: Iclients;
   company:ICompany
+}
+export interface IpizzaOption{
+  id:string;
+  size: string;
+  price: string
+  extras: [
+   string
+  ];
+  halfAndHalf: boolean,
+  halfOptions: string,
+  pizza:IPizza
+}
+
+export interface IPizza{
+id: number,
+name: string,
+price: string,
+description:string,
+img: string|null
 }
 
 export interface Iclients {
@@ -62,6 +81,18 @@ export interface Iclients {
     neighborhood: string;
     city: string;
   };
+}
+
+export interface IProducts{
+  id: string,
+  name: string,
+  quantity: string,
+  initialPrice: string,
+  price:string,
+  category: string,
+  supplier: string,
+  unitOfMeasurement: string,
+  img: string|null
 }
 
 export const LoginContext = createContext({} as ILoginContext);

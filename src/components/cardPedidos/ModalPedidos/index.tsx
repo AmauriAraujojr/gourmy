@@ -39,24 +39,45 @@ console.log(currentPedido)
   };
 
 
-  let index = 0;
-  if (currentPedido?.index) {
-    index = Number(currentPedido?.index+1);
+  let index: number = 0;
+  if (Number(currentPedido?.index)) {
+    index = Number(currentPedido?.index)+1;
   }
   return (
     <StyledNewModalBox>
       <div role="dialog" className="modal">
+<div className="box_one">
+<Body700 >Pedido Nº {index}</Body700>
         <button className="closeButton" onClick={()=>setOpenPedido(false)}>x</button>
-<div>
-<Body500 >{currentPedido?.type}</Body500>
-<Body500 >Pedido Nº {index}</Body500>
 
 </div>
+{currentPedido!.pizzaOption.length>0? currentPedido?.pizzaOption.map(pizzaO=>{
+   return <div className="pizza_options">
+    <Body700>Pizza</Body700>
+  <Body500>-{pizzaO.pizza.name}</Body500>
+  <Body500>{pizzaO.pizza.description}</Body500>
+  <Body500>-{pizzaO.halfOptions}</Body500>
+  <Body500>R$ {Number(pizzaO.price).toFixed(2)}</Body500>
+</div>}):null}
 
-      <Body700>Total: R$ {sum()}</Body700>
-      <Body500>{currentPedido?.client.name}</Body500>
+
+{currentPedido!.products.length>0? currentPedido?.products.map(product=>{
+   return <div className="products_options">
+    <Body700>Produtos</Body700>
+  <Body500>-{product.name}</Body500>
+
+  <Body500>R$ {Number(product.price).toFixed(2)}</Body500>
+</div>}):null}
+
+<Body500 >{currentPedido?.type}</Body500>
+{currentPedido?.type=="Entrega"?<Body500>Taxa de entrega: R$ {Number(currentPedido.taxa).toFixed(2)}</Body500>:null}
+<Body700>Total: R$ {sum()}</Body700>
+      <Body500>Cliente: {currentPedido?.client.name}</Body500>
+<Body500>Telefone: {currentPedido?.client.phoneNumber}</Body500>
 {currentPedido?.type == "Entrega" ?
       <div>
+
+
 
       <Body500>
           {currentPedido?.client.address.street}, {currentPedido?.client.address.number},{" "}

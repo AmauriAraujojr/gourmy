@@ -17,7 +17,7 @@ export const StyledNewModalBox = styled.div`
     width: 100%;
     max-width: 574px;
     background: var(--color-withe-fixed);
-    padding: 0 16px;
+    padding: 16px;
     border-radius: 8px;
     top: 80px;
     overflow: auto;
@@ -29,18 +29,21 @@ export const StyledNewModalBox = styled.div`
    
 
     .closeButton {
-      position: absolute;
-      top: 16px;
-      right: 16px;
+ 
       color: var(--color-grey-4);
       font-weight: 900;
       font-size: 1.125rem;
-      transition: 0.4s;
       cursor: pointer;
 
       :hover {
         opacity: 1;
       }
+    }
+
+    .box_one{
+      display: flex;
+      width:100%;
+      justify-content: space-between;
     }
   }
 
