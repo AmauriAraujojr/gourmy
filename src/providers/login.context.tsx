@@ -59,14 +59,16 @@ export interface IpizzaOption{
    string
   ];
   halfAndHalf: boolean,
-  halfOptions: string,
+  halfOptions: IPizza,
   pizza:IPizza
 }
 
 export interface IPizza{
 id: number,
 name: string,
-price: string,
+price_G: string,
+price_M:string,
+price_P:string,
 description:string,
 img: string|null
 }

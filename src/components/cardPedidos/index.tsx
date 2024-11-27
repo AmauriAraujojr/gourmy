@@ -4,6 +4,8 @@ import { Body500, Body700 } from "../../styles/tiphograpy";
 import { StatusForm } from "../forms/statusform";
 import { StyledCardPedidos } from "./styles";
 import { PedidosContext } from "../../providers/pedidos.context";
+import { IoIosOpen } from "react-icons/io";
+
 
 export interface ICardProps {
   pedido: IPedidos;
@@ -48,9 +50,9 @@ export const CardPedidos = ({ pedido, index }: ICardProps) => {
   return (
     <StyledCardPedidos>
       <div className="box_type">
-        <Body500 onClick={() => opening()}>Open</Body500>
-        <Body700>Pedido Nº {Number(index) + 1}</Body700>
         <Body500 className={pedido.type}>{pedido.type}</Body500>
+        <Body700>Pedido Nº {Number(index) + 1}</Body700>
+        <Body700 onClick={() => opening()} className="open"><IoIosOpen/></Body700>
       </div>
       <div className="box_client">
         <Body500>{pedido.client.name}</Body500>

@@ -8,6 +8,8 @@ import { PedidosModal } from "../cardPedidos/ModalPedidos";
 
 export const PedidosControls = () => {
   const {pedidos,openPedido} = useContext(PedidosContext)
+
+  
   const getDates = (timestamp: string) => {
     const data = new Date(timestamp);
 
@@ -56,6 +58,7 @@ export const PedidosControls = () => {
     (pedidos: IPedidos) => pedidos.status === "Concluído"
   );
 
+  console.log(pedidosOnDay)
   useEffect(() => {}, [pedidos]);
 
   return (

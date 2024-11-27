@@ -4,11 +4,26 @@ import { PedidosContext } from "../../../providers/pedidos.context";
 import { Body500, Body700 } from "../../../styles/tiphograpy";
 import { StyledNewModalBox } from "./styles";
 
-
 export const PedidosModal = () => {
   const { currentPedido, setOpenPedido } = useContext(PedidosContext);
+  
+  const getHour = (timestamp: string) => {
+    const data = new Date(timestamp);
+    // data.setHours(data.getHours() - 3);
 
-console.log(currentPedido)
+    const hour = data.getHours();
+    const minutes = data.getMinutes();
+    const second = data.getSeconds();
+
+    // Formatar a data como DD-MM-YYYY
+    const formattedHour = `${String(hour).padStart(2, "0")} : ${String(
+     minutes
+    ).padStart(2, "0")} : ${String(second).padStart(2, "0")}`;
+
+    // Retornar a data formatada
+    return formattedHour;
+  }
+
   const sum = () => {
     let totalPrice = 0;
 
@@ -20,7 +35,7 @@ console.log(currentPedido)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     }
 
-    if ( currentPedido && currentPedido.pizzaOption.length > 0) {
+    if (currentPedido && currentPedido.pizzaOption.length > 0) {
       pizzaOptionPrice = currentPedido?.pizzaOption
         .map((produto: any) => Number(produto.price))
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -31,62 +46,101 @@ console.log(currentPedido)
       taxa = Number(currentPedido?.taxa);
     }
 
-    
     let total = totalPrice + pizzaOptionPrice + taxa;
-    
-  
+
     return total.toFixed(2);
   };
 
-
   let index: number = 0;
   if (Number(currentPedido?.index)) {
-    index = Number(currentPedido?.index)+1;
+    index = Number(currentPedido?.index) + 1;
   }
   return (
     <StyledNewModalBox>
       <div role="dialog" className="modal">
-<div className="box_one">
-<Body700 >Pedido Nº {index}</Body700>
-        <button className="closeButton" onClick={()=>setOpenPedido(false)}>x</button>
+        <div className="box_one">
+          <Body700>Pedido Nº {index}</Body700>
+          <Body500 className="desc"> Pedido realizado às: {getHour(String(currentPedido?.createdAt))}</Body500>
+          <button className="closeButton" onClick={() => setOpenPedido(false)}>
+            x
+          </button>
+        </div>
+        {currentPedido!.pizzaOption.length > 0
+          ? currentPedido?.pizzaOption.map((pizzaO) => {
+              return (
+                <div className="pizza_options" key={pizzaO.id}>
+                  <Body700>Pizza</Body700>
+                  {!pizzaO.halfOptions ? (
+                    <>
+                      <Body500>{pizzaO.pizza.name}</Body500>
+                      <Body500 className="desc">
+                        {pizzaO.pizza.description}
+                      </Body500>
+                    </>
+                  ) : (
+                    <>
+                      <Body500>1/2 {pizzaO.pizza.name}</Body500>
+                      <Body500 className="desc">
+                        {pizzaO.pizza.description}
+                      </Body500>
+                      <Body500>1/2 {pizzaO.halfOptions?.name}</Body500>
+                      <Body500 className="desc">
+                        {pizzaO.halfOptions?.description}
+                      </Body500>
+                    </>
+                  )}
 
-</div>
-{currentPedido!.pizzaOption.length>0? currentPedido?.pizzaOption.map(pizzaO=>{
-   return <div className="pizza_options">
-    <Body700>Pizza</Body700>
-  <Body500>-{pizzaO.pizza.name}</Body500>
-  <Body500>{pizzaO.pizza.description}</Body500>
-  <Body500>-{pizzaO.halfOptions}</Body500>
-  <Body500>R$ {Number(pizzaO.price).toFixed(2)}</Body500>
-</div>}):null}
+                  <Body500 className="price">
+                    R$ {Number(pizzaO.price).toFixed(2)}
+                  </Body500>
+                </div>
+              );
+            })
+          : null}
 
+        {currentPedido!.products.length > 0
+          ? currentPedido?.products.map((product) => {
+              return (
+                <div className="products_options" key={product.id}>
+                  <Body700>Produtos</Body700>
+                  <Body500>{product.name}</Body500>
 
-{currentPedido!.products.length>0? currentPedido?.products.map(product=>{
-   return <div className="products_options">
-    <Body700>Produtos</Body700>
-  <Body500>-{product.name}</Body500>
+                  <Body500 className="price">
+                    R$ {Number(product.price).toFixed(2)}
+                  </Body500>
+                </div>
+              );
+            })
+          : null}
 
-  <Body500>R$ {Number(product.price).toFixed(2)}</Body500>
-</div>}):null}
+        <Body500>{currentPedido?.type}</Body500>
 
-<Body500 >{currentPedido?.type}</Body500>
-{currentPedido?.type=="Entrega"?<Body500>Taxa de entrega: R$ {Number(currentPedido.taxa).toFixed(2)}</Body500>:null}
-<Body700>Total: R$ {sum()}</Body700>
-      <Body500>Cliente: {currentPedido?.client.name}</Body500>
-<Body500>Telefone: {currentPedido?.client.phoneNumber}</Body500>
-{currentPedido?.type == "Entrega" ?
-      <div>
+        {currentPedido?.type == "Entrega" ? (
+          <div className="box_entrega">
+            <Body500>Taxa de entrega:</Body500>
+            <Body500 className="price">
+              R$ {Number(currentPedido.taxa).toFixed(2)}
+            </Body500>
+          </div>
+        ) : null}
+        <Body700 className="price total">Total: R$ {sum()}</Body700>
 
-
-
-      <Body500>
-          {currentPedido?.client.address.street}, {currentPedido?.client.address.number},{" "}
-          {currentPedido?.client.address.neighborhood}
-        </Body500>
+        <div className="cliente_box">
+          <div className="name_box">
+            <Body500>Cliente: {currentPedido?.client.name}</Body500>
+            <Body500>Telefone: {currentPedido?.client.phoneNumber}</Body500>
+          </div>
+          {currentPedido?.type == "Entrega" ? (
+            <div className="address_box">
+              <Body500>
+                {currentPedido?.client.address.street},{" "}
+                {currentPedido?.client.address.number},{" "}
+                {currentPedido?.client.address.neighborhood}
+              </Body500>
+            </div>
+          ) : null}
+        </div>
       </div>
-:null}
-
-    </div>
     </StyledNewModalBox>
   );
 };

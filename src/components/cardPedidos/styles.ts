@@ -26,6 +26,11 @@ export const StyledCardPedidos= styled.li`
         background: var(--color-brand1);
         padding:5px;
     }
+    .open{
+        color:var(--color-brand3);
+        font-size:1.3rem;
+        cursor:pointer;
+    }
 }
 .box_client{
     display:flex;

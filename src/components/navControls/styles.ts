@@ -11,7 +11,15 @@ gap:30px;
 li{
     cursor: pointer;
     width:100px;
-            /* border-bottom:1px solid var(--color-brand2); */
+    display:flex;
+    align-items:center;
+    gap:5px;
+          .text{
+            display:flex;
+            align-items:center;
+            gap:5px;
+
+          }  /* border-bottom:1px solid var(--color-brand2); */
 
     &:hover{
         color: var(--color-brand2);
