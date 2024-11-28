@@ -70,6 +70,8 @@ export const PedidosModal = () => {
               return (
                 <div className="pizza_options" key={pizzaO.id}>
                   <Body700>Pizza</Body700>
+                  <div className="size"><Body500>{pizzaO.size}</Body500> - <Body500 className="desc">{pizzaO.extras}</Body500>
+                  </div>
                   {!pizzaO.halfOptions ? (
                     <>
                       <Body500>{pizzaO.pizza.name}</Body500>
@@ -99,14 +101,14 @@ export const PedidosModal = () => {
           : null}
 
         {currentPedido!.products.length > 0
-          ? currentPedido?.products.map((product) => {
+          ? currentPedido?.products.map((products) => {
               return (
-                <div className="products_options" key={product.id}>
-                  <Body700>Produtos</Body700>
-                  <Body500>{product.name}</Body500>
+                <div className="products_options" key={products.id}>
+                  <Body700>{products.product.category}</Body700>
+                  <Body500>{products.product.name}</Body500>
 
                   <Body500 className="price">
-                    R$ {Number(product.price).toFixed(2)}
+                    R$ {Number(products.price).toFixed(2)}
                   </Body500>
                 </div>
               );

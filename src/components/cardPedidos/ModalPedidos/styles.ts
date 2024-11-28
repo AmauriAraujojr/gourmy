@@ -30,6 +30,13 @@ export const StyledNewModalBox = styled.div`
       align-self: flex-end;
     }
 
+    .size{
+      margin-bottom:7px;
+      display:flex;
+      align-items: center;
+      gap:3px;
+    }
+
     .total {
       background: var(--color-brand2);
     }

@@ -40,7 +40,7 @@ interface IEmployee {
 
 export interface IPedidos {
   id: number;
-  products: [IProducts];
+  products: [IproductsSell];
   pizzaOption: [IpizzaOption];
   type: string;
   status: string;
@@ -85,8 +85,15 @@ export interface Iclients {
   };
 }
 
+export interface IproductsSell{
+  id:number,
+  price:string,
+  product:IProducts
+
+}
+
 export interface IProducts{
-  id: string,
+  id: number,
   name: string,
   quantity: string,
   initialPrice: string,

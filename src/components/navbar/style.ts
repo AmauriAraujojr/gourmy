@@ -4,7 +4,7 @@ export const StyledNavBar = styled.header`
   background:linear-gradient(var(--color-brand4), var(--color-brand1));
   display: flex;
   align-items: center;
-  width: 220px;
+  width: 15%;
   max-width:220px;
   height: 100vh;
   border-right: 2px solid var(--color-brand2);

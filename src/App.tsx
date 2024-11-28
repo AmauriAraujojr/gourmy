@@ -18,6 +18,7 @@ const App = () => {
 
       <div className="principal_box">
         {path != "/" && path != `/cardapio/${fantayName}` ? <NavBar /> : null}
+        
         <RounterMain />
       </div>
 </StyledContainer>

@@ -71,4 +71,9 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     display:flex;
 }
+.pedidosPage{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+}
 `;

@@ -5,9 +5,12 @@ import { IPedidos } from "../../providers/login.context";
 import { HeadingTwo700 } from "../../styles/tiphograpy";
 import { PedidosContext } from "../../providers/pedidos.context";
 import { PedidosModal } from "../cardPedidos/ModalPedidos";
+import { PizzaContext } from "../../providers/pizza.context";
+import { ModalAdminPedidos } from "./ModalPedidoAdmin";
 
 export const PedidosControls = () => {
   const {pedidos,openPedido} = useContext(PedidosContext)
+  const{openMPizza}=useContext(PizzaContext)
 
   
   const getDates = (timestamp: string) => {
@@ -58,7 +61,6 @@ export const PedidosControls = () => {
     (pedidos: IPedidos) => pedidos.status === "Concluído"
   );
 
-  console.log(pedidosOnDay)
   useEffect(() => {}, [pedidos]);
 
   return (
@@ -111,6 +113,7 @@ export const PedidosControls = () => {
         })}
       </ul>
       {openPedido? <PedidosModal/>:null}
+      {openMPizza? <ModalAdminPedidos/>:null}
     </StyledPedidosControls>
   );
 };
