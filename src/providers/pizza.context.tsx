@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
-import { IPizza } from "./login.context";
+import { IPizza, IpizzaOption } from "./login.context";
 import { api } from "../services/api";
+import { IPizzaOptionFormData } from "../components/forms/pizzaOptionForm";
 
 interface IPizzaProvider {
   children: React.ReactNode;
@@ -14,6 +15,10 @@ interface IPizzaContext {
   setCurrentPizza: React.Dispatch<React.SetStateAction<IPizza | null>>
   modalPizza: boolean
   setModalPizza: React.Dispatch<React.SetStateAction<boolean>>
+  createPizzaOption: (formdata: IPizzaOptionFormData, id: number) => Promise<void>
+  pizzaOption: IpizzaOption[] 
+  setPizzaOption: React.Dispatch<React.SetStateAction<IpizzaOption[]>>
+
 }
 export const PizzaContext = createContext({} as IPizzaContext);
 
@@ -22,6 +27,7 @@ export const PizzaProvider = ({ children }: IPizzaProvider) => {
   const[openMPizza,setOpenMPizza]=useState(false)
 const[currentPizza, setCurrentPizza]= useState<IPizza|null>(null)
 const [modalPizza,setModalPizza]=useState(false)
+const [pizzaOption,setPizzaOption]=useState<IpizzaOption[]>([])
 
   const getAllPizzas = async () => {
     try {
@@ -32,11 +38,26 @@ const [modalPizza,setModalPizza]=useState(false)
     }
 
   };
+
+  const createPizzaOption=async(formdata:IPizzaOptionFormData, id:number)=>{
+
+    try {
+
+      const response=await api.post(`/pizzaOption/${id}`,formdata)
+      setPizzaOption([...pizzaOption,response.data])
+      
+    } catch (error) {
+      console.error(error)
+      
+    }
+
+  }
   useEffect(() => {
     getAllPizzas();
   }, []);
 
   return (
-    <PizzaContext.Provider value={{ pizzas,openMPizza,setOpenMPizza,currentPizza,setCurrentPizza,modalPizza,setModalPizza }}>{children}</PizzaContext.Provider>
+    <PizzaContext.Provider value={{ pizzas,openMPizza,setOpenMPizza,currentPizza,setCurrentPizza,modalPizza,setModalPizza,createPizzaOption,pizzaOption,setPizzaOption
+    }}>{children}</PizzaContext.Provider>
   );
 };
