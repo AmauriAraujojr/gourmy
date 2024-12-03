@@ -28,7 +28,8 @@ export const StyledFormPizzaOption = styled.div`
 form{
     display:flex;
     flex-direction: column;
-gap: 30px;
+gap: 20px;
+align-items: center;
 
 }
 .size_box{
@@ -58,6 +59,28 @@ input {
         color: var(--color-brand1);
         background-color:transparent;
         border:none;
+    }
+}
+
+.half_options{
+    display:flex;
+    flex-direction:column;
+    padding:5px;
+    border:1px solid var(--color-brand2);
+    overflow: auto;
+    height:90px;
+    gap:5px;
+    width: 100%;
+}
+.desc{
+    font-size: 0.73rem;
+    color: var(--color-grey-2);
+}
+.half_pizza{
+    cursor: pointer;
+    &:hover{
+        background-color: var(--color-brand1);
+        padding: 5px;
     }
 }
 `;

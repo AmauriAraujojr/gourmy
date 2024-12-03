@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IPizza } from "../../../providers/login.context";
 import { PizzaContext } from "../../../providers/pizza.context";
@@ -9,7 +9,7 @@ export interface IPizzaOptionFormData {
   size: string;
   halfAndHalf: boolean;
   pizza: IPizza;
-  halfOptions:IPizza
+  halfOptions: IPizza;
 }
 
 export const PizzaOptionForm = () => {
@@ -19,19 +19,31 @@ export const PizzaOptionForm = () => {
     },
   });
 
-  const { currentPizza, createPizzaOption,setModalPizza,setPizzaOption,pizzas} = useContext(PizzaContext);
+  const {
+    currentPizza,
+    createPizzaOption,
+    setModalPizza,
+    setPizzaOption,
+    pizzaOption,
+    pizzas,
+  } = useContext(PizzaContext);
 
   const [openSelect, setOpenSelect] = useState(false);
-  console.log(openSelect);
+  const [halfOptions, setHalfOptions] = useState<IPizza>();
+
   const submit: SubmitHandler<IPizzaOptionFormData> = (formData) => {
     formData.pizza = currentPizza!;
-    // createPizzaOption(formData, currentPizza!.id);
-    console.log(formData)
+    formData.halfOptions = halfOptions!;
+    createPizzaOption(formData, currentPizza!.id);
+    console.log(formData);
   };
-const closeAndSetPizzaOption=()=>{
-  setPizzaOption([])
-  setModalPizza(false)
-}
+  const closeAndSetPizzaOption = () => {
+    setPizzaOption([]);
+    setModalPizza(false);
+  };
+  useEffect(() => {
+    console.log(pizzaOption)
+  }, [openSelect,pizzaOption]);
   return (
     <StyledFormPizzaOption>
       <div className="current_pizza">
@@ -39,7 +51,6 @@ const closeAndSetPizzaOption=()=>{
         <Body500>{currentPizza?.description}</Body500>
 
         <form onSubmit={handleSubmit(submit)}>
-          <div {...register("pizza")}></div>
           <div className="size_box">
             <div className="size_content">
               <Body700> Grande</Body700>
@@ -66,30 +77,46 @@ const closeAndSetPizzaOption=()=>{
             </div>
           </div>
           <div className="size_content">
+            <Body700>Meio a Meio?</Body700>
+            <input
+              onClick={() => setOpenSelect(!openSelect)}
+              type="checkbox"
+              {...register("halfAndHalf")}
+            />
+          </div>
 
-          <Body700>Meio a Meio?</Body700>
-          <input
-            onClick={() => setOpenSelect(true)}
-            type="checkbox"
-            {...register("halfAndHalf")}
-          />
+          <Body500 className="desc">
+            Pizzas meio a meio será cobrado pelo valor maior!
+          </Body500>
 
-          <div>
-            <select {...register("halfOptions")}>
-
-              {pizzas?.map((pizza:IPizza)=>{
-                return <option value={""}>
-                    <Body700>{pizza.name}: </Body700>
-                    <Body500>{pizza.description}</Body500>
-
-                </option>
+          {openSelect ? (
+            <div className="half_options">
+              <Body700>Escolha a segunda metade:</Body700>
+              {pizzas?.map((pizza: IPizza) => {
+                return (
+                  <div
+                    key={pizza.id}
+                    className="half_pizza"
+                    onClick={() => setHalfOptions(pizza)}
+                  >
+                    <Body500>1/2 {pizza.name} </Body500>
+                    <Body500 className="desc">{pizza.description}</Body500>
+                  </div>
+                );
               })}
-            </select>
-          </div>
-          </div>
+            </div>
+          ) : null}
+
           <div className="box_button">
-<button> <Body700 onClick={()=>closeAndSetPizzaOption()}>Cancelar</Body700></button>
-          <button type="submit"><Body700>Próximo</Body700> </button>
+            <button>
+              {" "}
+              <Body700 onClick={() => closeAndSetPizzaOption()}>
+                Cancelar
+              </Body700>
+            </button>
+            <button type="submit">
+              <Body700>Próximo</Body700>{" "}
+            </button>
           </div>
         </form>
       </div>
