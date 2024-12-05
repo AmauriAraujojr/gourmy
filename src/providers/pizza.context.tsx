@@ -29,10 +29,16 @@ const[currentPizza, setCurrentPizza]= useState<IPizza|null>(null)
 const [modalPizza,setModalPizza]=useState(false)
 const [pizzaOption,setPizzaOption]=useState<IpizzaOption[]>([])
 
+
   const getAllPizzas = async () => {
+    const userLogado = JSON.parse(localStorage.getItem("@USER")!);
+
     try {
       const response = await api.get("/pizza");
-      setPizzas(response.data);
+     const companyPizzas=response.data.filter((pizza:IPizza)=>{
+      return pizza.company.id == userLogado.userType.id
+     })
+      setPizzas(companyPizzas);
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +50,8 @@ const [pizzaOption,setPizzaOption]=useState<IpizzaOption[]>([])
     try {
 
       const response=await api.post(`/pizzaOption/${id}`,formdata)
+     
+     
       setPizzaOption([...pizzaOption,response.data])
       
     } catch (error) {

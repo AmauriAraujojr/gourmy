@@ -10,6 +10,10 @@ export interface IPizzaOptionFormData {
   halfAndHalf: boolean;
   pizza: IPizza;
   halfOptions: IPizza;
+  borda:{
+    sabor:string
+    price:string
+  }
 }
 
 export const PizzaOptionForm = () => {
@@ -34,6 +38,11 @@ export const PizzaOptionForm = () => {
   const submit: SubmitHandler<IPizzaOptionFormData> = (formData) => {
     formData.pizza = currentPizza!;
     formData.halfOptions = halfOptions!;
+    formData.borda ={
+      sabor:"catupiry",
+      price:"4"
+    }
+    
     createPizzaOption(formData, currentPizza!.id);
     console.log(formData);
   };
@@ -44,6 +53,8 @@ export const PizzaOptionForm = () => {
   useEffect(() => {
     console.log(pizzaOption)
   }, [openSelect,pizzaOption]);
+
+  
   return (
     <StyledFormPizzaOption>
       <div className="current_pizza">
@@ -51,31 +62,7 @@ export const PizzaOptionForm = () => {
         <Body500>{currentPizza?.description}</Body500>
 
         <form onSubmit={handleSubmit(submit)}>
-          <div className="size_box">
-            <div className="size_content">
-              <Body700> Grande</Body700>
-              <Body500>R$: {Number(currentPizza?.price_G).toFixed(2)}</Body500>
-
-              <input
-                type="radio"
-                value="Grande"
-                {...register("size")} //
-              />
-            </div>
-
-            <div className="size_content">
-              <Body700> Média</Body700>
-              <Body500>R$: {Number(currentPizza?.price_M).toFixed(2)}</Body500>
-
-              <input type="radio" value="Média" {...register("size")} />
-            </div>
-            <div className="size_content">
-              <Body700>Pequena</Body700>
-              <Body500>R$: {Number(currentPizza?.price_P).toFixed(2)}</Body500>
-
-              <input type="radio" value="Pequena" {...register("size")} />
-            </div>
-          </div>
+         
           <div className="size_content">
             <Body700>Meio a Meio?</Body700>
             <input
@@ -106,6 +93,34 @@ export const PizzaOptionForm = () => {
               })}
             </div>
           ) : null}
+
+         
+
+<div className="size_box">
+            <div className="size_content">
+              <Body700> Grande</Body700>
+              <Body500>R$: {Number(currentPizza?.price_G).toFixed(2)}</Body500>
+
+              <input
+                type="radio"
+                value="Grande"
+                {...register("size")} //
+              />
+            </div>
+
+            <div className="size_content">
+              <Body700> Média</Body700>
+              <Body500>R$: {Number(currentPizza?.price_M).toFixed(2)}</Body500>
+
+              <input type="radio" value="Média" {...register("size")} />
+            </div>
+            <div className="size_content">
+              <Body700>Pequena</Body700>
+              <Body500>R$: {Number(currentPizza?.price_P).toFixed(2)}</Body500>
+
+              <input type="radio" value="Pequena" {...register("size")} />
+            </div>
+          </div>
 
           <div className="box_button">
             <button>

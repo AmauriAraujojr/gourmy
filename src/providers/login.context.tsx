@@ -70,7 +70,8 @@ price_G: string,
 price_M:string,
 price_P:string,
 description:string,
-img: string|null
+img: string|null,
+company:ICompany
 }
 
 export interface Iclients {
