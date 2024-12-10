@@ -71,7 +71,8 @@ price_M:string,
 price_P:string,
 description:string,
 img: string|null,
-company:ICompany
+company:ICompany,
+borda:any
 }
 
 export interface Iclients {

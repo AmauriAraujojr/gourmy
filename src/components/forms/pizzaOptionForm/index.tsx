@@ -10,11 +10,9 @@ export interface IPizzaOptionFormData {
   halfAndHalf: boolean;
   pizza: IPizza;
   halfOptions: IPizza;
-  borda:{
-    sabor:string
-    price:string
+  borda:any
+    
   }
-}
 
 export const PizzaOptionForm = () => {
   const { register, handleSubmit } = useForm<IPizzaOptionFormData>({
@@ -34,14 +32,62 @@ export const PizzaOptionForm = () => {
 
   const [openSelect, setOpenSelect] = useState(false);
   const [halfOptions, setHalfOptions] = useState<IPizza>();
+  const [borda, setBorda]=useState({sabor:"",price:""})
+
+
+    let priceTotal=""
+if(halfOptions){
+
+
+    if (Number(currentPizza?.price_G) > Number(halfOptions.price_G)) {
+      let sum = Number(currentPizza?.price_G) + Number(borda.price);
+      priceTotal = String(sum);
+    } else if (Number(currentPizza?.price_G) < Number(halfOptions.price_G)) {
+      let sum = Number(halfOptions.price_G) + Number(borda.price);
+
+      priceTotal = String(sum);
+    } else {
+      let sum = Number(currentPizza?.price_G) + Number(borda.price);
+
+      priceTotal = String(sum);
+    }}
+//     if (Number(pizza.price_M) > Number(pizza2.price_M)) {
+//       let sum = Number(pizza.price_M) + Number(payload.borda.price);
+//       priceTotal = String(sum);
+//     } else if (Number(pizza.price_M) < Number(pizza2.price_M)) {
+//       let sum = Number(pizza2.price_M) + Number(payload.borda.price);
+//       priceTotal = String(sum);
+//     } else {
+//       let sum = Number(pizza.price_M) + Number(payload.borda.price);
+//       priceTotal = String(sum);
+//     }
+//     if (Number(pizza.price_P) > Number(pizza2.price_P)) {
+//       let sum = Number(pizza.price_P) + Number(payload.borda.price);
+
+//       priceTotal = String(sum);
+//     } else if (Number(pizza.price_P) < Number(pizza2.price_P)) {
+//       let sum = Number(pizza2.price_P) + Number(payload.borda.price);
+//       priceTotal = String(sum);
+//     } else {
+//       let sum = Number(pizza.price_P) + Number(payload.borda.price);
+
+//       priceTotal = String(sum);
+//     }
+//   }
+else{
+  let sum = Number(currentPizza?.price_G) + Number(borda.price);
+
+  priceTotal = String(sum);
+
+}
+
 
   const submit: SubmitHandler<IPizzaOptionFormData> = (formData) => {
     formData.pizza = currentPizza!;
     formData.halfOptions = halfOptions!;
-    formData.borda ={
-      sabor:"catupiry",
-      price:"4"
-    }
+    formData.borda = borda
+     
+    
     
     createPizzaOption(formData, currentPizza!.id);
     console.log(formData);
@@ -94,12 +140,21 @@ export const PizzaOptionForm = () => {
             </div>
           ) : null}
 
-         
+         <div>
+
+            {currentPizza?.borda.map((borda:any)=>{
+              return <div onClick={()=> setBorda(borda)} key={borda.name}> 
+                <Body500>{borda.sabor}</Body500>
+                <Body500>{borda.price}</Body500>
+
+              </div>
+            })}
+         </div>
 
 <div className="size_box">
             <div className="size_content">
               <Body700> Grande</Body700>
-              <Body500>R$: {Number(currentPizza?.price_G).toFixed(2)}</Body500>
+              <Body500>R$: {Number(priceTotal).toFixed(2)}</Body500>
 
               <input
                 type="radio"
