@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PizzaContext } from "../../../providers/pizza.context";
 import { HeadingOne700 } from "../../../styles/tiphograpy";
 import { StyledModalAdmin } from "./styles";
@@ -7,7 +7,13 @@ import { IPizza } from "../../../providers/login.context";
 
 export const ModalAdminPedidos=()=>{
 
-    const {pizzas,setOpenMPizza,setCurrentPizza,modalPizza,setModalPizza}=useContext(PizzaContext)
+    const {pizzas,setOpenMPizza,setCurrentPizza,modalPizza,setModalPizza,getAllPizzas}=useContext(PizzaContext)
+
+    useEffect(()=>{
+
+getAllPizzas()
+
+    },[])
 
     const setPizzaOpenModal=(pizza:IPizza)=>{
         setCurrentPizza(pizza)

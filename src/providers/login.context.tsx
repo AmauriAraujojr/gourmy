@@ -124,23 +124,8 @@ export const LoginProvider = ({ children }: ILoginProvider) => {
 
       localStorage.setItem("@TOKEN", token);
 
-      const jwt: any = jwtDecode(token);
+      autoLogin(token)
 
-      localStorage.setItem("@USER", JSON.stringify(jwt));
-
-      if (jwt.sub == "admin") {
-        setCompany(jwt.userType);
-
-        navigate("/admin");
-      } else if (jwt.userType.job == "Motoboy") {
-        setEmployee(jwt.userType);
-        
-        navigate("/employes/entregas");
-      } else if (jwt.userType.job == "Garçon") {
-        setEmployee(jwt.userType);
-
-        navigate("employes/mesas");
-      }
     } catch (error) {
       console.log(error);
     }
@@ -149,23 +134,18 @@ export const LoginProvider = ({ children }: ILoginProvider) => {
 
   const autoLogin = async (token:string) => {
     try {
-      const userLogado = JSON.parse(localStorage.getItem("@USER")!);
-      if (userLogado.sub == "admin") {
+      const userLogado:any = jwtDecode(token);
+      ;
+      const response = await api.get(`/company/${userLogado.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
-        const response = await api.get(`/company/${userLogado.userType.id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
         setCompany(response.data);
-        // navigate("/admin");
-      } else if (userLogado.userType.job == "Motoboy") {
-        setEmployee(userLogado.userType);
-        navigate("/employes/entregas");
-      } else if (userLogado.userType.job == "Garçon") {
-        setEmployee(userLogado.userType);
-        navigate("employes/mesas");
-      }
+        navigate("/admin");
+        setLoad(false)
+     
     } catch (error) {
       console.log(error);
     }
@@ -182,7 +162,6 @@ export const LoginProvider = ({ children }: ILoginProvider) => {
 
   const logout = () => {
     localStorage.removeItem("@TOKEN");
-    localStorage.removeItem("@USER");
     setCompany(null);
     setEmployee(null)
     setLoad(false)

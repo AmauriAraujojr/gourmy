@@ -90,7 +90,6 @@ else{
     
     
     createPizzaOption(formData, currentPizza!.id);
-    console.log(formData);
   };
   const closeAndSetPizzaOption = () => {
     setPizzaOption([]);
