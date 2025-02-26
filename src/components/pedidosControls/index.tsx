@@ -61,8 +61,6 @@ export const PedidosControls = () => {
     (pedidos: IPedidos) => pedidos.status === "Concluído"
   );
 
-  useEffect(() => {}, [pedidos]);
-
   return (
     <StyledPedidosControls>
       <ul className="pedidos_box pend">

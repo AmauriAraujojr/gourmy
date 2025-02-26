@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { IPizza, IpizzaOption, LoginContext } from "./login.context";
 import { api } from "../services/api";
 import { IPizzaOptionFormData } from "../components/forms/pizzaOptionForm";
+import { PedidosContext } from "./pedidos.context";
 
 interface IPizzaProvider {
   children: React.ReactNode;
@@ -16,9 +17,9 @@ interface IPizzaContext {
   modalPizza: boolean
   setModalPizza: React.Dispatch<React.SetStateAction<boolean>>
   createPizzaOption: (formdata: IPizzaOptionFormData, id: number) => Promise<void>
-  pizzaOption: IpizzaOption[] 
-  setPizzaOption: React.Dispatch<React.SetStateAction<IpizzaOption[]>>
-  getAllPizzas: () => Promise<void>
+  pizzaOption: IpizzaOption | undefined
+  setPizzaOption: React.Dispatch<React.SetStateAction<IpizzaOption | undefined>>
+    getAllPizzas: () => Promise<void>
 
 }
 export const PizzaContext = createContext({} as IPizzaContext);
@@ -28,9 +29,11 @@ export const PizzaProvider = ({ children }: IPizzaProvider) => {
   const[openMPizza,setOpenMPizza]=useState(false)
 const[currentPizza, setCurrentPizza]= useState<IPizza|null>(null)
 const [modalPizza,setModalPizza]=useState(false)
-const [pizzaOption,setPizzaOption]=useState<IpizzaOption[]>([])
+const [pizzaOption,setPizzaOption]=useState<IpizzaOption>()
 
 const{company}=useContext(LoginContext)
+const{setCart}=useContext(PedidosContext)
+
 
   const getAllPizzas = async () => {
 
@@ -53,8 +56,11 @@ const{company}=useContext(LoginContext)
       const response=await api.post(`/pizzaOption/${id}`,formdata)
      
      
-      setPizzaOption([...pizzaOption,response.data])
-      
+      setPizzaOption(response.data)
+      setCart((prev)=>{
+        return [...prev,response.data]
+
+    })
     } catch (error) {
       console.error(error)
       

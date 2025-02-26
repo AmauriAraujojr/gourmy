@@ -4,6 +4,7 @@ import { IPizza } from "../../../providers/login.context";
 import { PizzaContext } from "../../../providers/pizza.context";
 import { StyledFormPizzaOption } from "./styles";
 import { Body500, Body700, HeadingOne700h } from "../../../styles/tiphograpy";
+import { PedidosContext } from "../../../providers/pedidos.context";
 
 export interface IPizzaOptionFormData {
   size: string;
@@ -29,6 +30,8 @@ export const PizzaOptionForm = () => {
     pizzaOption,
     pizzas,
   } = useContext(PizzaContext);
+
+
 
   const [openSelect, setOpenSelect] = useState(false);
   const [halfOptions, setHalfOptions] = useState<IPizza>();
@@ -92,7 +95,7 @@ else{
     createPizzaOption(formData, currentPizza!.id);
   };
   const closeAndSetPizzaOption = () => {
-    setPizzaOption([]);
+    setPizzaOption(undefined);
     setModalPizza(false);
   };
   useEffect(() => {
@@ -184,7 +187,7 @@ else{
               </Body700>
             </button>
             <button type="submit">
-              <Body700>Próximo</Body700>{" "}
+              <Body700>Adicionar ao carrinho</Body700>{" "}
             </button>
           </div>
         </form>
