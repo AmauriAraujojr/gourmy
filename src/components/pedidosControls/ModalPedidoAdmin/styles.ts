@@ -5,7 +5,6 @@ export const StyledModalAdmin = styled.div`
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
-
   display: flex;
   align-items: top;
   justify-content: center;
@@ -13,7 +12,7 @@ export const StyledModalAdmin = styled.div`
   .modal {
     position: relative;
     width: 100%;
-    max-width: 874px;
+    max-width: 1000px;
     background: var(--color-withe-fixed);
     padding: 16px;
     border-radius: 8px;
@@ -22,8 +21,7 @@ export const StyledModalAdmin = styled.div`
     overflow-x: hidden;
     max-height: 60vh;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     color: var(--color-grey-1);
   }
   .closeButton {
@@ -42,11 +40,17 @@ export const StyledModalAdmin = styled.div`
         opacity: 1;
       }
     }
+
+    .modal_content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    }
   .pizza_box {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     background-color: var(--color-grey-8);
-    height: 200px;
+    height: 40%;
     overflow: auto;
     gap: 10px;
     padding: 5px;

@@ -1,54 +1,75 @@
 import { useContext } from "react";
-import { HeadingTwo700 } from "../../styles/tiphograpy";
+import {
+  Body500,
+  Button800,
+  HeadingOne700,
+  HeadingTwo700,
+} from "../../styles/tiphograpy";
 import { PedidosContext } from "../../providers/pedidos.context";
 import { StyledCart } from "./styles";
 
 export const Cart = () => {
-  const {  setOpenCart, cart,setCart} = useContext(PedidosContext);
+  const { setOpenCart, cart, setCart } = useContext(PedidosContext);
 
   const getTotal = () => {
-        return cart.reduce((acc, item) => acc + Number(item.price) , 0);
-      };
+    return cart.reduce((acc, item) => acc + Number(item.price), 0);
+  };
 
-      const handleRemove = (index: number) => {
-            const newCart = cart.filter((item, i) => i !== index);
-            setCart(newCart);
-          };
+  const handleRemove = (index: number) => {
+    const newCart = cart.filter((item, i) => i !== index);
+    setCart(newCart);
+  };
 
   return (
     <StyledCart className="cart_box">
-      <div className="title">
-         <HeadingTwo700>Carrinho</HeadingTwo700>
-         <button onClick={() => setOpenCart(false)} ></button>
-      </div>
-      <ul>
-         {cart.map((item, index) => (
-            <li key={index}>
-              {item.halfOptions?<HeadingTwo700>1/2 {item.pizza.name} 1/2 {item.halfOptions.name}</HeadingTwo700>:
-                                <HeadingTwo700>{item.pizza.name} </HeadingTwo700>
+      <HeadingOne700>Carrinho</HeadingOne700>
+      {/* <button onClick={() => setOpenCart(false)} ></button> */}
 
-}
-                  <HeadingTwo700>R$ {Number(item.price).toFixed(2)}</HeadingTwo700>
+      {cart.length >= 1 ? (
+        <>
+          <ul className="cart_content">
+            {cart.map((item, index) => (
+              <li key={index} className="cart_item">
+                <Body500>Pizza</Body500>
+                {item.halfOptions ? (
+                  <div className="half">
+                    <p className="desc">1/2 {item.pizza.name} </p>
+
+                    <p className="desc">1/2 {item.halfOptions.name}</p>
+                  </div>
+                ) : (
+                  <p className="desc">{item.pizza.name} </p>
+                )}
+                <p className="desc">R$ {Number(item.price).toFixed(2)}</p>
                 {/* <div className="quantity"> */}
-                  {/* <button onClick={() => handleQuantity(index, "remove")}>
+                {/* <button onClick={() => handleQuantity(index, "remove")}>
                     <MinusIcon />
-                  </button>
-                  <HeadingTwo400>{item.quantity}</HeadingTwo400>
-                  <button onClick={() => handleQuantity(index, "add")}>
+                    </button>
+                    <HeadingTwo400>{item.quantity}</HeadingTwo400>
+                    <button onClick={() => handleQuantity(index, "add")}>
                     <PlusIcon />
-                  </button>
-                </div> */}
+                    </button>
+                    </div> */}
 
-                <button onClick={() => handleRemove(index)}>
-                  {/* <TrashIcon /> */} remover
-                </button> 
-            </li>
-          ))}
+                <button onClick={() => handleRemove(index)} className="remove">
+                  {/* <TrashIcon /> */} #
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <div className="total">
+            <HeadingTwo700>Total: R$ {getTotal().toFixed(2)}</HeadingTwo700>
+            <button className="finish">
+              <Button800>Finalizar Pedido</Button800>
+            </button>
+          </div>
+        </>
+      ) : (
+        <ul className="cart_content">
+          <HeadingTwo700 className="vazio">Carrinho Vazio</HeadingTwo700>
         </ul>
-
-        <div className="total">
-       <HeadingTwo700>Total: R$ {getTotal().toFixed(2)}</HeadingTwo700>
-        </div>
+      )}
     </StyledCart>
   );
 };
