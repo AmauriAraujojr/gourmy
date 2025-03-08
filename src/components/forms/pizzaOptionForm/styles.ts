@@ -11,32 +11,30 @@ export const StyledFormPizzaOption = styled.div`
   height: 100%;
   left: 0;
   top: 0;
-  padding: 30px;
 
   .current_pizza {
-    background-color: var(--color-grey-8);
+    background-color: var(--color-grey-6);
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    padding: 30px;
-    border: 1px solid var(--color-brand2);
     border-radius: 10px;
-    gap: 10px;
     height: 100%;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--color-brand2);
   }
+
   form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     align-items: center;
-    background-color: var(--color-grey-3);
     max-width: 100%;
+    background-color: var(--color-grey-6);
   }
   .size_box {
     display: flex;
-    gap: 20px;
     max-width: 100%;
   }
   .size_content {
@@ -44,21 +42,24 @@ export const StyledFormPizzaOption = styled.div`
     align-items: center;
     justify-content: center;
     gap: 5px;
+    flex-direction: column;
   }
   .borda_box {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    width: 100%;
+    
     .borda_content {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
+      width: 100%;
+      overflow-x: auto;
+      padding: 5px;
+      justify-content: flex-start;
 
       .borda_select {
         cursor: pointer;
-        padding: 5px;
+        min-width: 195px;
+
         &:hover {
           background-color: var(--color-brand1);
         }
@@ -66,10 +67,10 @@ export const StyledFormPizzaOption = styled.div`
         &:focus {
           background-color: var(--color-brand2);
         }
-        }
-        .borda_select.active {
+      }
+      .borda_select.active {
         background-color: var(--color-brand2);
-  }
+      }
     }
   }
 
@@ -81,12 +82,12 @@ export const StyledFormPizzaOption = styled.div`
     align-items: center;
     justify-content: center;
     gap: 20px;
+    max-width: 100%;
     button {
       cursor: pointer;
-      width: 200px;
-      padding: 10px;
       color: var(--color-brand1);
       background-color: transparent;
+
       border: none;
     }
   }
@@ -111,12 +112,23 @@ export const StyledFormPizzaOption = styled.div`
       background-color: var(--color-brand1);
       padding: 5px;
     }
-   
+
     &:focus {
       background-color: var(--color-brand2);
     }
+  }
+  .half_pizza.active {
+    background-color: var(--color-brand2);
+  }
+  @media (min-width: 768px) {
+    padding: 30px;
+
+    .current_pizza {
+      padding: 15px;
+      gap: 10px;
     }
-    .half_pizza.active {
-      background-color: var(--color-brand2);
+    .size_content {
+      flex-direction: row;
+    }
   }
 `;

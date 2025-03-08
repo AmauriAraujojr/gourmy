@@ -45,6 +45,8 @@ export const StyledModalAdmin = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+        width: 70%;
+
     }
   .pizza_box {
     display: grid;
@@ -55,15 +57,16 @@ export const StyledModalAdmin = styled.div`
     gap: 10px;
     padding: 5px;
     align-content:start;
-    justify-items:center
+    justify-items:center;
 ;    .pizza {
       padding: 10px;
-      width: 260px;
+      width: 200px;
       height: 50px;
       background-color: var(--color-brand2);
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
 
       cursor: pointer;
       &:hover {
